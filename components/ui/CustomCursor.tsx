@@ -26,7 +26,7 @@ export default function CustomCursor() {
   useEffect(() => {
     if (isTouch === null || isTouch) return;
 
-    document.documentElement.style.cursor = "none";
+    document.documentElement.classList.add("hide-cursor");
 
     const onMove = (e: MouseEvent) => {
       mouse.current = { x: e.clientX, y: e.clientY };
@@ -55,8 +55,7 @@ export default function CustomCursor() {
         dotRef.current.style.transform = `translate(${x - 3}px, ${y - 3}px)`;
       }
 
-      // Fix 1: lerp aumentado de 0.1→0.22 (normal) e 0.18→0.30 (hover)
-      const lerp = hover.current ? 0.30 : 0.22;
+      const lerp = hover.current ? 0.50 : 0.38;
       ring.current.x += (x - ring.current.x) * lerp;
       ring.current.y += (y - ring.current.y) * lerp;
 
@@ -84,7 +83,7 @@ export default function CustomCursor() {
     raf = requestAnimationFrame(loop);
 
     return () => {
-      document.documentElement.style.cursor = "";
+      document.documentElement.classList.remove("hide-cursor");
       window.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseover", onOver);
       document.removeEventListener("mouseout", onOut);

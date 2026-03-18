@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ShoppingBag, Music, Calendar, User, Store } from "lucide-react";
@@ -13,6 +13,29 @@ const navLinks = [
   { href: "/bio", label: "Bio", icon: User },
   { href: "/loja", label: "Loja", icon: Store },
 ];
+
+function GlitchLogo() {
+  const [glitching, setGlitching] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleEnter = useCallback(() => {
+    if (glitching) return;
+    setGlitching(true);
+    timerRef.current = setTimeout(() => setGlitching(false), 620);
+  }, [glitching]);
+
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
+
+  return (
+    <Link
+      href="/"
+      onMouseEnter={handleEnter}
+      className={`font-bold text-lg tracking-tight text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors${glitching ? " logo-glitch" : ""}`}
+    >
+      GuedZZ
+    </Link>
+  );
+}
 
 function ScrambleLink({
   href,
@@ -68,12 +91,7 @@ export default function Header() {
     >
       <div className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link
-          href="/"
-          className="font-bold text-lg tracking-tight text-[var(--text-primary)] hover:text-[var(--accent)] transition-colors"
-        >
-          GuedZZ
-        </Link>
+        <GlitchLogo />
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-1">
