@@ -66,3 +66,36 @@ body {
 
 /* Neon border glow */
 .glow-border-purple { box-shadow: 0 0 0 1px var(--accent), var(--glow-purple); }
+
+/* Glitch effect — dispara raramente para não distrair */
+@keyframes glitch {
+  0%, 88%, 100% {
+    transform: none;
+    text-shadow: 0 0 60px rgba(160,32,240,0.3), 0 0 120px rgba(160,32,240,0.1);
+  }
+  89% {
+    transform: translateX(-3px);
+    text-shadow: 3px 0 var(--neon-blue), 0 0 60px rgba(160,32,240,0.3);
+  }
+  90% {
+    transform: translateX(3px);
+    text-shadow: -3px 0 var(--neon-pink), 0 0 60px rgba(160,32,240,0.3);
+  }
+  91% {
+    transform: translateX(-2px) skewX(-2deg);
+    text-shadow: 2px 0 var(--neon-blue), -2px 0 var(--neon-pink);
+    opacity: 0.85;
+  }
+  92% {
+    transform: translateX(1px);
+    text-shadow: -1px 0 var(--neon-pink), 0 0 60px rgba(160,32,240,0.3);
+  }
+  93% {
+    transform: none;
+    text-shadow: 0 0 60px rgba(160,32,240,0.3), 0 0 120px rgba(160,32,240,0.1);
+  }
+}
+
+.glitch-text {
+  animation: glitch 9s infinite;
+}

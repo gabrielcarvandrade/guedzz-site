@@ -6,15 +6,21 @@ import Image from "next/image";
 import { ChevronDown, Music, Calendar } from "lucide-react";
 import Button from "@/components/ui/Button";
 
+const taglines = [
+  { text: "Music is the answer 🎶", color: "var(--accent)", glow: "var(--glow-purple)" },
+  { text: "Art in motion.", color: "var(--neon-blue)", glow: "var(--glow-blue)" },
+  { text: "Soul in expansion.", color: "var(--neon-pink)", glow: "var(--glow-pink)" },
+];
+
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Deep black background */}
       <div className="absolute inset-0 bg-[#080808]" />
 
-      {/* Artist photo — dark, faded on the side */}
+      {/* Artist photo — more visible */}
       <div className="absolute inset-0 flex justify-end pointer-events-none">
-        <div className="relative w-full md:w-1/2 h-full opacity-20">
+        <div className="relative w-full md:w-2/3 h-full opacity-[0.35]">
           <Image
             src="/images/guedzz.jpg"
             alt=""
@@ -23,15 +29,27 @@ export default function Hero() {
             priority
           />
           {/* Fade to black on left and bottom */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/70 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent" />
         </div>
       </div>
 
-      {/* Neon glow blobs — rare, subtle */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-[var(--accent)] opacity-[0.06] blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-[var(--neon-blue)] opacity-[0.05] blur-[100px] pointer-events-none" />
-      <div className="absolute top-1/2 right-1/3 w-48 h-48 rounded-full bg-[var(--neon-pink)] opacity-[0.04] blur-[80px] pointer-events-none" />
+      {/* Neon glow blobs — pulsing */}
+      <motion.div
+        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-[var(--accent)] blur-[120px] pointer-events-none"
+        animate={{ opacity: [0.06, 0.1, 0.06] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-[var(--neon-blue)] blur-[100px] pointer-events-none"
+        animate={{ opacity: [0.04, 0.08, 0.04] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+      />
+      <motion.div
+        className="absolute top-1/2 right-1/3 w-48 h-48 rounded-full bg-[var(--neon-pink)] blur-[80px] pointer-events-none"
+        animate={{ opacity: [0.03, 0.06, 0.03] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+      />
 
       {/* Fine grid */}
       <div
@@ -45,52 +63,70 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 text-center px-5 max-w-4xl mx-auto">
+        {/* Genre tag */}
+        <motion.p
+          initial={{ opacity: 0, letterSpacing: "0.5em" }}
+          animate={{ opacity: 1, letterSpacing: "0.3em" }}
+          transition={{ duration: 1.2, delay: 0.2 }}
+          className="text-[var(--text-muted)] text-xs font-semibold uppercase tracking-[0.3em] mb-6"
+        >
+          House • Tech • Minimal
+        </motion.p>
+
+        {/* Name with glitch */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          {/* Tag line */}
-          <motion.p
-            initial={{ opacity: 0, letterSpacing: "0.5em" }}
-            animate={{ opacity: 1, letterSpacing: "0.3em" }}
-            transition={{ duration: 1.2, delay: 0.2 }}
-            className="text-[var(--text-muted)] text-xs font-semibold uppercase tracking-[0.3em] mb-6"
-          >
-            House • Tech • Minimal
-          </motion.p>
-
-          {/* Name with neon glow */}
-          <h1
-            className="text-7xl md:text-9xl lg:text-[11rem] font-black tracking-tighter leading-none text-white mb-2"
-            style={{ textShadow: "0 0 60px rgba(160,32,240,0.3), 0 0 120px rgba(160,32,240,0.1)" }}
-          >
+          <h1 className="glitch-text text-7xl md:text-9xl lg:text-[11rem] font-black tracking-tighter leading-none text-white mb-6">
             GuedZZ
           </h1>
+        </motion.div>
 
-          {/* Accent line */}
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <div className="h-px w-12 bg-[var(--neon-blue)] opacity-60" style={{ boxShadow: "0 0 8px var(--neon-blue)" }} />
-            <span className="text-[var(--accent)] text-sm font-medium tracking-widest uppercase" style={{ textShadow: "var(--glow-purple)" }}>
-              Music is the answer
-            </span>
-            <div className="h-px w-12 bg-[var(--neon-blue)] opacity-60" style={{ boxShadow: "0 0 8px var(--neon-blue)" }} />
-          </div>
+        {/* Taglines em sequência */}
+        <motion.div
+          className="flex flex-col items-center gap-1 mb-8"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.4, delayChildren: 0.8 } },
+          }}
+        >
+          {taglines.map(({ text, color, glow }) => (
+            <motion.p
+              key={text}
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+              }}
+              className="text-sm font-medium italic tracking-wide"
+              style={{ color, textShadow: glow }}
+            >
+              {text}
+            </motion.p>
+          ))}
+        </motion.div>
 
-          <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
-            <Link href="/musicas">
-              <Button variant="primary" size="lg">
-                <Music size={16} />
-                Ouvir Agora
-              </Button>
-            </Link>
-            <Link href="/agenda">
-              <Button variant="outline" size="lg">
-                <Calendar size={16} />
-                Ver Agenda
-              </Button>
-            </Link>
-          </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 2 }}
+          className="flex flex-col sm:flex-row gap-3 items-center justify-center"
+        >
+          <Link href="/musicas">
+            <Button variant="primary" size="lg">
+              <Music size={16} />
+              Ouvir Agora
+            </Button>
+          </Link>
+          <Link href="/agenda">
+            <Button variant="outline" size="lg">
+              <Calendar size={16} />
+              Ver Agenda
+            </Button>
+          </Link>
         </motion.div>
       </div>
 
@@ -99,7 +135,7 @@ export default function Hero() {
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-[var(--text-muted)]"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.4 }}
+        transition={{ delay: 2.4 }}
       >
         <span className="text-xs tracking-widest uppercase">scroll</span>
         <motion.div

@@ -1,4 +1,5 @@
 import Hero from "@/components/sections/Hero";
+import SoundcloudPlayer from "@/components/sections/SoundcloudPlayer";
 import FeaturedReleases from "@/components/sections/FeaturedReleases";
 import UpcomingEvents from "@/components/sections/UpcomingEvents";
 import FeaturedProducts from "@/components/sections/FeaturedProducts";
@@ -13,6 +14,7 @@ export default function HomePage() {
   return (
     <>
       <Hero />
+      <SoundcloudPlayer />
       <FeaturedReleases releases={featuredReleases} />
       <UpcomingEvents events={eventsData} />
       <FeaturedProducts products={featuredProducts} />
