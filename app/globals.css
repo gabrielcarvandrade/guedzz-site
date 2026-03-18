@@ -199,69 +199,47 @@ body::before {
 }
 
 /* ─── Hero Title: TV ligando de lado ─────────────────────────── */
-/* ─── Hero Title: TV ligando de lado com choque ──────────────── */
+/* ─── Hero Title: distorção de sinal / choque elétrico ──────── */
 @keyframes hero-glitch {
-  /* Impacto: flash branco + linha central */
-  0% {
-    clip-path: inset(0 50% 0 50%);
-    transform: scaleX(0.02);
-    text-shadow: 0 0 60px #fff, 0 0 120px #fff, 0 0 200px #A020F0;
-    filter: brightness(10) contrast(2);
-    opacity: 1;
-  }
-  /* Flicker — apaga por um frame */
-  6% {
-    opacity: 0;
-    clip-path: inset(0 48% 0 48%);
-    filter: brightness(8);
-  }
-  /* Volta com choque — expande rápido */
-  10% {
-    opacity: 1;
-    clip-path: inset(0 40% 0 40%);
-    transform: scaleX(0.2) translateX(-6px);
-    text-shadow: 20px 0 #00C8FF, -20px 0 #FF00AA, 0 0 50px #fff;
-    filter: brightness(4);
-  }
-  22% {
-    clip-path: inset(0 22% 0 22%);
-    transform: scaleX(0.56) translateX(4px);
-    text-shadow: 16px 0 #FF00AA, -16px 0 #00C8FF;
-    filter: brightness(2);
-  }
-  38% {
-    clip-path: inset(0 8% 0 8%);
-    transform: scaleX(0.84) translateX(-2px);
-    text-shadow: 10px 0 #00C8FF, -10px 0 #FF00AA;
-    filter: brightness(1.5);
-  }
-  /* Overshoot: leve espalhamento além do normal */
-  54% {
-    clip-path: inset(0 0 0 0);
-    transform: scaleX(1.05);
-    text-shadow: 6px 0 #00C8FF, -6px 0 #FF00AA;
-    filter: brightness(1.15);
-  }
-  /* Assenta */
-  68% {
-    clip-path: none;
-    transform: scaleX(1);
-    text-shadow: 3px 0 #00C8FF, -3px 0 #FF00AA;
-    filter: brightness(1);
-  }
-  84% {
-    text-shadow: 1px 0 #00C8FF, -1px 0 #FF00AA;
-  }
-  100% {
-    text-shadow: none;
-    transform: none;
-    clip-path: none;
-    filter: brightness(1);
-    opacity: 1;
-  }
+  0%  { transform: none; text-shadow: none; filter: none; }
+
+  /* Choque inicial — impacto horizontal forte */
+  8%  { transform: translateX(-16px) skewX(-10deg);
+        text-shadow: 18px 0 #00C8FF, -18px 0 #FF00AA;
+        filter: brightness(2); }
+  14% { transform: translateX(14px) skewX(8deg);
+        text-shadow: -16px 0 #FF00AA, 16px 0 #00C8FF;
+        filter: brightness(1.8); }
+
+  /* Sinal falhando — bandas deslocadas */
+  20% { transform: translateX(-10px);
+        text-shadow: 22px 0 #00C8FF, -22px 0 #FF00AA;
+        clip-path: inset(25% 0 45% 0);
+        filter: brightness(1.5); }
+  24% { transform: translateX(8px) skewX(-5deg);
+        text-shadow: -14px 0 #FF00AA, 14px 0 #00C8FF;
+        clip-path: inset(55% 0 10% 0); }
+  28% { transform: translateX(-6px);
+        text-shadow: 10px 0 #00C8FF, -10px 0 #FF00AA;
+        clip-path: none; }
+
+  /* Segundo impacto menor */
+  36% { transform: translateX(10px) skewX(6deg);
+        text-shadow: -8px 0 #00C8FF, 8px 0 #FF00AA; }
+  42% { transform: translateX(-7px) skewX(-4deg);
+        text-shadow: 6px 0 #FF00AA, -6px 0 #00C8FF; }
+
+  /* Sinal voltando */
+  52% { transform: translateX(4px);
+        text-shadow: 4px 0 #00C8FF, -4px 0 #FF00AA; }
+  62% { transform: translateX(-2px);
+        text-shadow: 2px 0 #FF00AA, -2px 0 #00C8FF; }
+  76% { transform: translateX(1px);
+        text-shadow: 1px 0 #00C8FF, -1px 0 #FF00AA; }
+
+  100% { transform: none; text-shadow: none; clip-path: none; filter: none; }
 }
 
 .hero-glitch-active {
-  animation: hero-glitch 1s ease-out forwards;
-  transform-origin: center;
+  animation: hero-glitch 0.9s linear forwards;
 }
