@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
+import CustomCursor from "@/components/ui/CustomCursor";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={`${inter.variable} antialiased bg-[var(--background)] text-[var(--text-primary)]`}>
+        <CustomCursor />
         <Header />
         <main>{children}</main>
         <Footer />

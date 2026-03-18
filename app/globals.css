@@ -67,6 +67,31 @@ body {
 /* Neon border glow */
 .glow-border-purple { box-shadow: 0 0 0 1px var(--accent), var(--glow-purple); }
 
+/* RGB cursor animations */
+@keyframes rgb-border-cycle {
+  0%   { border-color: #A020F0; box-shadow: 0 0 10px #A020F0, 0 0 20px rgba(160,32,240,0.3); }
+  25%  { border-color: #00C8FF; box-shadow: 0 0 10px #00C8FF, 0 0 20px rgba(0,200,255,0.3); }
+  50%  { border-color: #FF00AA; box-shadow: 0 0 10px #FF00AA, 0 0 20px rgba(255,0,170,0.3); }
+  75%  { border-color: #FF1744; box-shadow: 0 0 10px #FF1744, 0 0 20px rgba(255,23,68,0.3); }
+  100% { border-color: #A020F0; box-shadow: 0 0 10px #A020F0, 0 0 20px rgba(160,32,240,0.3); }
+}
+
+@keyframes rgb-fill-cycle {
+  0%   { background: #A020F0; }
+  25%  { background: #00C8FF; }
+  50%  { background: #FF00AA; }
+  75%  { background: #FF1744; }
+  100% { background: #A020F0; }
+}
+
+.rgb-ring {
+  animation: rgb-border-cycle 2.5s linear infinite;
+}
+
+.cursor-trail {
+  animation: rgb-fill-cycle 2.5s linear infinite;
+}
+
 /* Glitch effect — dispara raramente para não distrair */
 @keyframes glitch {
   0%, 88%, 100% {
