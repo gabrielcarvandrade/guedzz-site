@@ -29,7 +29,7 @@ function ScrambleLink({
     <Link
       href={href}
       onMouseEnter={trigger}
-      className={`px-4 py-2 rounded-md text-sm font-mono font-medium transition-colors ${
+      className={`nav-underline px-4 py-2 rounded-md text-sm font-mono font-medium transition-colors ${
         isActive
           ? "text-[var(--accent)]"
           : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"

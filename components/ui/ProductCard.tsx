@@ -27,7 +27,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Link href={`/loja/${product.slug}`} className="group block">
-      <div className="rounded-lg overflow-hidden border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] transition-colors duration-200">
+      <div className="rounded-lg overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:border-[var(--accent)]/50 transition-all duration-300" style={{ transition: "border-color 0.3s, box-shadow 0.3s" }} onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 30px rgba(160,32,240,0.08)")} onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}>
         {/* Image */}
         <div className="relative aspect-square overflow-hidden bg-[var(--border)]">
           <Image
