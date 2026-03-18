@@ -110,7 +110,7 @@ export default function CustomCursor() {
         className="fixed top-0 left-0 w-[6px] h-[6px] rounded-full pointer-events-none z-[9999]"
         style={{
           background: "#fff",
-          boxShadow: "0 0 6px var(--accent), 0 0 14px var(--accent), 0 0 28px rgba(160,32,240,0.6)",
+          boxShadow: "0 0 6px var(--cursor-section-color, var(--accent)), 0 0 14px var(--cursor-section-color, var(--accent)), 0 0 28px color-mix(in srgb, var(--cursor-section-color, var(--accent)) 60%, transparent)",
         }}
       />
 

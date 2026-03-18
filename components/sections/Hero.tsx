@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronDown, Music, Calendar } from "lucide-react";
@@ -15,8 +15,29 @@ const taglines = [
 ];
 
 export default function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const hoveringRef = useRef(false);
+
+  // Scroll parallax na foto
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
+  const photoY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+
+  // Mouse parallax nos blobs
+  const rawX = useMotionValue(0);
+  const rawY = useMotionValue(0);
+  const blobX1 = useSpring(useTransform(rawX, [-0.5, 0.5], [-18, 18]), { stiffness: 60, damping: 20 });
+  const blobY1 = useSpring(useTransform(rawY, [-0.5, 0.5], [-12, 12]), { stiffness: 60, damping: 20 });
+  const blobX2 = useSpring(useTransform(rawX, [-0.5, 0.5], [24, -24]), { stiffness: 40, damping: 25 });
+  const blobY2 = useSpring(useTransform(rawY, [-0.5, 0.5], [16, -16]), { stiffness: 40, damping: 25 });
+  const blobX3 = useSpring(useTransform(rawX, [-0.5, 0.5], [-14, 14]), { stiffness: 50, damping: 22 });
+  const blobY3 = useSpring(useTransform(rawY, [-0.5, 0.5], [-20, 20]), { stiffness: 50, damping: 22 });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    rawX.set((e.clientX - rect.left) / rect.width - 0.5);
+    rawY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
 
   useEffect(() => {
     const el = titleRef.current;
@@ -51,15 +72,15 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section ref={sectionRef} onMouseMove={handleMouseMove} className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Deep black base */}
       <div className="absolute inset-0 bg-[#080808]" />
 
       {/* Animated neon waves — club background */}
       <AnimatedWaves />
 
-      {/* Artist photo */}
-      <div className="absolute inset-0 flex justify-end pointer-events-none" style={{ zIndex: 1 }}>
+      {/* Artist photo — scroll parallax */}
+      <motion.div className="absolute inset-0 flex justify-end pointer-events-none" style={{ zIndex: 1, y: photoY }}>
         <div className="relative w-full md:w-2/3 h-full opacity-[0.38]">
           <Image
             src="/images/guedzz.jpg"
@@ -71,26 +92,26 @@ export default function Hero() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/65 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent" />
         </div>
-      </div>
+      </motion.div>
 
       {/* Neon glow blobs — pulsing, all colors */}
       <motion.div
         className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[var(--accent)] blur-[130px] pointer-events-none"
         animate={{ opacity: [0.07, 0.13, 0.07] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        style={{ zIndex: 1 }}
+        style={{ zIndex: 1, x: blobX1, y: blobY1 }}
       />
       <motion.div
         className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-[var(--neon-blue)] blur-[110px] pointer-events-none"
         animate={{ opacity: [0.05, 0.10, 0.05] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-        style={{ zIndex: 1 }}
+        style={{ zIndex: 1, x: blobX2, y: blobY2 }}
       />
       <motion.div
         className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-[var(--neon-pink)] blur-[90px] pointer-events-none"
         animate={{ opacity: [0.04, 0.09, 0.04] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        style={{ zIndex: 1 }}
+        style={{ zIndex: 1, x: blobX3, y: blobY3 }}
       />
       <motion.div
         className="absolute top-1/3 right-1/5 w-48 h-48 rounded-full bg-[var(--neon-red)] blur-[80px] pointer-events-none"

@@ -6,6 +6,9 @@ import Footer from "@/components/layout/Footer";
 import CartDrawer from "@/components/ui/CartDrawer";
 import CustomCursor from "@/components/ui/CustomCursor";
 import IntroScreen from "@/components/ui/IntroScreen";
+import ScrollProgress from "@/components/ui/ScrollProgress";
+import ClickRipple from "@/components/ui/ClickRipple";
+import SectionColorTracker from "@/components/ui/SectionColorTracker";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -26,6 +29,9 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={`${inter.variable} antialiased bg-[var(--background)] text-[var(--text-primary)]`}>
         <IntroScreen />
+        <ScrollProgress />
+        <ClickRipple />
+        <SectionColorTracker />
         <CustomCursor />
         <Header />
         <main>{children}</main>

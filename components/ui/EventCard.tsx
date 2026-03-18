@@ -23,10 +23,10 @@ export default function EventCard({ event }: EventCardProps) {
 
   return (
     <div
-      className={`flex items-center gap-5 p-5 rounded-lg border border-[var(--border)] transition-colors duration-200 ${
+      className={`flex items-center gap-5 p-5 rounded-lg border transition-all duration-300 ${
         event.past
-          ? "opacity-50"
-          : "hover:border-[var(--accent)] hover:bg-[var(--surface)]"
+          ? "opacity-50 border-white/5 bg-white/[0.02]"
+          : "border-white/10 bg-white/[0.03] backdrop-blur-sm hover:border-[var(--accent)]/50"
       }`}
     >
       {/* Date block */}

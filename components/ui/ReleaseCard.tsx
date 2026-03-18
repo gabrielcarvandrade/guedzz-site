@@ -36,9 +36,9 @@ export default function ReleaseCard({ release, showEmbed = false }: ReleaseCardP
   const [embedOpen, setEmbedOpen] = useState(false);
 
   return (
-    <div className="group rounded-lg overflow-hidden border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)] transition-colors duration-200"
-         style={{ transition: "border-color 0.2s, box-shadow 0.2s" }}
-         onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 20px rgba(160,32,240,0.08)")}
+    <div className="group rounded-lg overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:border-[var(--accent)]/50 transition-all duration-300"
+         style={{ transition: "border-color 0.3s, box-shadow 0.3s" }}
+         onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 30px rgba(160,32,240,0.1), inset 0 0 30px rgba(160,32,240,0.03)")}
          onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}
     >
       {/* Cover image */}

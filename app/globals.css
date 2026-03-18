@@ -169,6 +169,31 @@ body::before {
   97%            { opacity: 0.020; }
 }
 
+/* ─── Click Ripple ───────────────────────────────────────────── */
+@keyframes ripple-expand {
+  0%   { width: 0; height: 0; opacity: 0.7; }
+  100% { width: 140px; height: 140px; opacity: 0; }
+}
+
+/* ─── Nav underline animado ──────────────────────────────────── */
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  transition: width 0.3s ease;
+}
+.nav-underline:hover::after {
+  width: 100%;
+}
+
 /* ─── BPM Pulse ──────────────────────────────────────────────── */
 @keyframes bpm-pulse {
   0%, 100% { transform: scale(1);   opacity: 1; }
