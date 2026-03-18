@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,6 +15,22 @@ const taglines = [
 ];
 
 export default function Hero() {
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleGlitch = () => {
+    const el = titleRef.current;
+    if (!el || el.classList.contains("hero-glitch-active")) return;
+    el.classList.remove("glitch-text");
+    el.classList.add("hero-glitch-active");
+    timerRef.current = setTimeout(() => {
+      el.classList.remove("hero-glitch-active");
+      el.classList.add("glitch-text");
+    }, 720);
+  };
+
+  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Deep black base */}
@@ -117,7 +134,11 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          <h1 className="glitch-text text-7xl md:text-9xl lg:text-[11rem] font-black tracking-tighter leading-none text-white mb-6">
+          <h1
+            className="glitch-text text-7xl md:text-9xl lg:text-[11rem] font-black tracking-tighter leading-none text-white mb-6 select-none"
+            ref={titleRef}
+            onMouseEnter={handleGlitch}
+          >
             GuedZZ
           </h1>
         </motion.div>

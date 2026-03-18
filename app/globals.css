@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+/* ─── Custom Cursor: esconde cursor nativo em tudo ───────────── */
+html.hide-cursor,
+html.hide-cursor * {
+  cursor: none !important;
+}
+
 :root {
   --background: #080808;
   --surface: #111111;
@@ -167,4 +173,50 @@ body::before {
 @keyframes bpm-pulse {
   0%, 100% { transform: scale(1);   opacity: 1; }
   50%       { transform: scale(1.7); opacity: 0.5; }
+}
+
+/* ─── Logo Glitch Explosivo ──────────────────────────────────── */
+@keyframes logo-glitch {
+  0%   { text-shadow: none; transform: none; }
+  5%   { text-shadow: -3px 0 #00C8FF, 3px 0 #FF00AA; transform: translateX(-2px) skewX(-4deg); }
+  10%  { text-shadow:  3px 0 #00C8FF,-3px 0 #FF00AA; transform: translateX( 3px) skewX( 6deg); }
+  15%  { text-shadow: -5px 0 #00C8FF, 5px 0 #FF00AA; transform: translateX(-4px) skewX(-3deg); clip-path: inset(20% 0 30% 0); }
+  20%  { text-shadow:  4px 0 #FF00AA,-4px 0 #00C8FF; transform: translateX( 2px) skewX( 5deg); clip-path: inset(60% 0 10% 0); }
+  25%  { text-shadow: -2px 0 #00C8FF, 2px 0 #FF00AA; transform: translateX(-1px) skewX(-2deg); clip-path: none; }
+  30%  { text-shadow:  6px 0 #00C8FF,-6px 0 #FF00AA; transform: translateX( 5px) skewX(-8deg); }
+  35%  { text-shadow: -4px 0 #FF00AA, 4px 0 #00C8FF; transform: translateX(-3px) skewX( 4deg); }
+  40%  { text-shadow:  2px 0 #00C8FF,-2px 0 #FF00AA; transform: translateX( 1px) skewX(-1deg); clip-path: inset(40% 0 20% 0); }
+  50%  { text-shadow: -3px 0 #00C8FF, 3px 0 #FF00AA; transform: translateX(-2px); clip-path: none; }
+  60%  { text-shadow:  2px 0 #FF00AA,-2px 0 #00C8FF; transform: translateX( 2px) skewX( 2deg); }
+  70%  { text-shadow: -1px 0 #00C8FF, 1px 0 #FF00AA; transform: translateX(-1px); }
+  80%  { text-shadow:  1px 0 #FF00AA,-1px 0 #00C8FF; transform: none; }
+  90%  { text-shadow: none; transform: translateX(1px); }
+  100% { text-shadow: none; transform: none; clip-path: none; }
+}
+
+.logo-glitch {
+  animation: logo-glitch 0.6s steps(1) forwards;
+}
+
+/* ─── Hero Title Glitch (tamanho grande) ─────────────────────── */
+@keyframes hero-glitch {
+  0%   { text-shadow: none; transform: none; clip-path: none; }
+  4%   { text-shadow: -8px 0 #00C8FF, 8px 0 #FF00AA; transform: translateX(-5px) skewX(-6deg); }
+  8%   { text-shadow: 12px 0 #FF00AA,-12px 0 #00C8FF; transform: translateX(8px) skewX(10deg); clip-path: inset(15% 0 40% 0); }
+  12%  { text-shadow: -15px 0 #00C8FF, 15px 0 #FF00AA; transform: translateX(-10px) skewX(-12deg); clip-path: inset(55% 0 5% 0); }
+  16%  { text-shadow: 10px 0 #A020F0,-10px 0 #00C8FF; transform: translateX(7px) skewX(8deg); clip-path: inset(30% 0 25% 0); }
+  20%  { text-shadow: -6px 0 #FF00AA, 6px 0 #A020F0; transform: translateX(-4px) skewX(-5deg); clip-path: none; }
+  26%  { text-shadow: 18px 0 #00C8FF,-18px 0 #FF00AA; transform: translateX(12px) skewX(-15deg); }
+  30%  { text-shadow: -12px 0 #FF00AA, 12px 0 #00C8FF; transform: translateX(-8px) skewX(6deg); clip-path: inset(70% 0 0% 0); }
+  36%  { text-shadow: 8px 0 #00C8FF,-8px 0 #FF00AA; transform: translateX(5px) skewX(-4deg); clip-path: none; }
+  44%  { text-shadow: -5px 0 #FF00AA, 5px 0 #00C8FF; transform: translateX(-3px) skewX(3deg); }
+  54%  { text-shadow: 4px 0 #00C8FF,-4px 0 #FF00AA; transform: translateX(3px); }
+  64%  { text-shadow: -3px 0 #FF00AA, 3px 0 #00C8FF; transform: translateX(-2px); }
+  74%  { text-shadow: 2px 0 #00C8FF,-2px 0 #FF00AA; transform: none; }
+  84%  { text-shadow: -1px 0 #FF00AA, 1px 0 #00C8FF; }
+  100% { text-shadow: none; transform: none; clip-path: none; }
+}
+
+.hero-glitch-active {
+  animation: hero-glitch 0.7s linear forwards;
 }
