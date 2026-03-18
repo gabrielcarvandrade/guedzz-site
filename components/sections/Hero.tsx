@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronDown, Music, Calendar } from "lucide-react";
 import Button from "@/components/ui/Button";
+import AnimatedWaves from "@/components/ui/AnimatedWaves";
 
 const taglines = [
   { text: "Music is the answer 🎶", color: "var(--accent)", glow: "var(--glow-purple)" },
@@ -15,12 +16,15 @@ const taglines = [
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Deep black background */}
+      {/* Deep black base */}
       <div className="absolute inset-0 bg-[#080808]" />
 
-      {/* Artist photo — more visible */}
-      <div className="absolute inset-0 flex justify-end pointer-events-none">
-        <div className="relative w-full md:w-2/3 h-full opacity-[0.35]">
+      {/* Animated neon waves — club background */}
+      <AnimatedWaves />
+
+      {/* Artist photo */}
+      <div className="absolute inset-0 flex justify-end pointer-events-none" style={{ zIndex: 1 }}>
+        <div className="relative w-full md:w-2/3 h-full opacity-[0.38]">
           <Image
             src="/images/guedzz.jpg"
             alt=""
@@ -28,27 +32,35 @@ export default function Hero() {
             className="object-cover object-top"
             priority
           />
-          {/* Fade to black on left and bottom */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/65 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent" />
         </div>
       </div>
 
-      {/* Neon glow blobs — pulsing */}
+      {/* Neon glow blobs — pulsing, all colors */}
       <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-[var(--accent)] blur-[120px] pointer-events-none"
-        animate={{ opacity: [0.06, 0.1, 0.06] }}
+        className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[var(--accent)] blur-[130px] pointer-events-none"
+        animate={{ opacity: [0.07, 0.13, 0.07] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        style={{ zIndex: 1 }}
       />
       <motion.div
-        className="absolute bottom-1/4 right-1/4 w-72 h-72 rounded-full bg-[var(--neon-blue)] blur-[100px] pointer-events-none"
-        animate={{ opacity: [0.04, 0.08, 0.04] }}
+        className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-[var(--neon-blue)] blur-[110px] pointer-events-none"
+        animate={{ opacity: [0.05, 0.10, 0.05] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+        style={{ zIndex: 1 }}
       />
       <motion.div
-        className="absolute top-1/2 right-1/3 w-48 h-48 rounded-full bg-[var(--neon-pink)] blur-[80px] pointer-events-none"
-        animate={{ opacity: [0.03, 0.06, 0.03] }}
+        className="absolute top-2/3 left-1/3 w-64 h-64 rounded-full bg-[var(--neon-pink)] blur-[90px] pointer-events-none"
+        animate={{ opacity: [0.04, 0.09, 0.04] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        style={{ zIndex: 1 }}
+      />
+      <motion.div
+        className="absolute top-1/3 right-1/5 w-48 h-48 rounded-full bg-[var(--neon-red)] blur-[80px] pointer-events-none"
+        animate={{ opacity: [0.03, 0.07, 0.03] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+        style={{ zIndex: 1 }}
       />
 
       {/* BPM Badge */}
@@ -80,17 +92,17 @@ export default function Hero() {
 
       {/* Fine grid */}
       <div
-        className="absolute inset-0 opacity-[0.025]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(160,32,240,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(160,32,240,0.5) 1px, transparent 1px)",
+            "linear-gradient(rgba(160,32,240,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(0,200,255,0.4) 1px, transparent 1px)",
           backgroundSize: "80px 80px",
+          zIndex: 1,
         }}
       />
 
       {/* Content */}
-      <div className="relative z-10 text-center px-5 max-w-4xl mx-auto">
-        {/* Genre tag */}
+      <div className="relative text-center px-5 max-w-4xl mx-auto" style={{ zIndex: 10 }}>
         <motion.p
           initial={{ opacity: 0, letterSpacing: "0.5em" }}
           animate={{ opacity: 1, letterSpacing: "0.3em" }}
@@ -100,7 +112,6 @@ export default function Hero() {
           House • Tech • Minimal
         </motion.p>
 
-        {/* Name with glitch */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -111,7 +122,6 @@ export default function Hero() {
           </h1>
         </motion.div>
 
-        {/* Taglines em sequência */}
         <motion.div
           className="flex flex-col items-center gap-1 mb-8"
           initial="hidden"
@@ -163,6 +173,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.4 }}
+        style={{ zIndex: 10 }}
       >
         <span className="text-xs tracking-widest uppercase">scroll</span>
         <motion.div

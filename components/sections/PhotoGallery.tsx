@@ -5,11 +5,42 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const photos = [
-  { src: "/images/guedzz.jpg", alt: "GuedZZ", accent: "var(--accent)" },
-  { src: "/images/guedzz.jpg", alt: "Live Set", accent: "var(--neon-blue)" },
-  { src: "/images/guedzz.jpg", alt: "Behind the Decks", accent: "var(--neon-pink)" },
-  { src: "/images/guedzz.jpg", alt: "Studio", accent: "var(--accent)" },
-  { src: "/images/guedzz.jpg", alt: "Festival", accent: "var(--neon-red)" },
+  {
+    src: "/images/gallery/pioneer-set.jpg",
+    alt: "No Pioneer",
+    accent: "var(--accent)",
+    objectPosition: "top",
+  },
+  {
+    src: "/images/gallery/party-night.jpg",
+    alt: "Party Night",
+    accent: "var(--neon-blue)",
+    objectPosition: "center",
+  },
+  {
+    src: "/images/gallery/neon-setup.jpg",
+    alt: "Setup",
+    accent: "var(--neon-pink)",
+    objectPosition: "center",
+  },
+  {
+    src: "/images/gallery/recording.jpg",
+    alt: "Bastidores",
+    accent: "var(--accent)",
+    objectPosition: "center",
+  },
+  {
+    src: "/images/gallery/portrait.jpg",
+    alt: "GuedZZ",
+    accent: "var(--neon-red)",
+    objectPosition: "top",
+  },
+  {
+    src: "/images/guedzz.jpg",
+    alt: "GuedZZ",
+    accent: "var(--neon-blue)",
+    objectPosition: "top",
+  },
 ];
 
 export default function PhotoGallery() {
@@ -60,7 +91,8 @@ export default function PhotoGallery() {
                 src={photo.src}
                 alt={photo.alt}
                 fill
-                className="object-cover object-top pointer-events-none"
+                className="object-cover pointer-events-none"
+                style={{ objectPosition: photo.objectPosition }}
                 draggable={false}
               />
 
