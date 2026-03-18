@@ -1,10 +1,17 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TRAIL_LENGTH = 10;
 
 export default function CustomCursor() {
+  // Fix 2: detect touch device on mount, render nothing on mobile
+  const [isTouch, setIsTouch] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(pointer: coarse)").matches);
+  }, []);
+
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const trailRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -17,8 +24,7 @@ export default function CustomCursor() {
   );
 
   useEffect(() => {
-    // Only on desktop — skip on touch devices
-    if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (isTouch === null || isTouch) return;
 
     document.documentElement.style.cursor = "none";
 
@@ -45,13 +51,12 @@ export default function CustomCursor() {
     const loop = () => {
       const { x, y } = mouse.current;
 
-      // Dot: snaps to cursor exactly
       if (dotRef.current) {
         dotRef.current.style.transform = `translate(${x - 3}px, ${y - 3}px)`;
       }
 
-      // Ring: lerps behind cursor
-      const lerp = hover.current ? 0.18 : 0.1;
+      // Fix 1: lerp aumentado de 0.1→0.22 (normal) e 0.18→0.30 (hover)
+      const lerp = hover.current ? 0.30 : 0.22;
       ring.current.x += (x - ring.current.x) * lerp;
       ring.current.y += (y - ring.current.y) * lerp;
 
@@ -62,7 +67,6 @@ export default function CustomCursor() {
         ringRef.current.style.height = `${size}px`;
       }
 
-      // Trail: shift history and render
       history.current = [{ x, y }, ...history.current.slice(0, TRAIL_LENGTH - 1)];
       trailRefs.current.forEach((el, i) => {
         if (!el) return;
@@ -86,11 +90,13 @@ export default function CustomCursor() {
       document.removeEventListener("mouseout", onOut);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [isTouch]);
+
+  // Fix 2: não renderiza nada em touch/mobile
+  if (isTouch === null || isTouch) return null;
 
   return (
     <>
-      {/* Trail */}
       {Array.from({ length: TRAIL_LENGTH }).map((_, i) => (
         <div
           key={i}
@@ -100,18 +106,15 @@ export default function CustomCursor() {
         />
       ))}
 
-      {/* Center dot */}
       <div
         ref={dotRef}
         className="fixed top-0 left-0 w-[6px] h-[6px] rounded-full pointer-events-none z-[9999]"
         style={{
           background: "#fff",
-          boxShadow:
-            "0 0 6px var(--accent), 0 0 14px var(--accent), 0 0 28px rgba(160,32,240,0.6)",
+          boxShadow: "0 0 6px var(--accent), 0 0 14px var(--accent), 0 0 28px rgba(160,32,240,0.6)",
         }}
       />
 
-      {/* RGB ring */}
       <div
         ref={ringRef}
         className="rgb-ring fixed top-0 left-0 rounded-full pointer-events-none z-[9998]"

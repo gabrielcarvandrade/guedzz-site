@@ -1,50 +1,50 @@
 "use client";
 
-import { useRef } from "react";
-import { motion } from "framer-motion";
+import { useRef, useEffect, useCallback } from "react";
+import { motion, useMotionValue } from "framer-motion";
 import Image from "next/image";
 
 const photos = [
-  {
-    src: "/images/gallery/pioneer-set.jpg",
-    alt: "No Pioneer",
-    accent: "var(--accent)",
-    objectPosition: "top",
-  },
-  {
-    src: "/images/gallery/party-night.jpg",
-    alt: "Party Night",
-    accent: "var(--neon-blue)",
-    objectPosition: "center",
-  },
-  {
-    src: "/images/gallery/neon-setup.jpg",
-    alt: "Setup",
-    accent: "var(--neon-pink)",
-    objectPosition: "center",
-  },
-  {
-    src: "/images/gallery/recording.jpg",
-    alt: "Bastidores",
-    accent: "var(--accent)",
-    objectPosition: "center",
-  },
-  {
-    src: "/images/gallery/portrait.jpg",
-    alt: "GuedZZ",
-    accent: "var(--neon-red)",
-    objectPosition: "top",
-  },
-  {
-    src: "/images/guedzz.jpg",
-    alt: "GuedZZ",
-    accent: "var(--neon-blue)",
-    objectPosition: "top",
-  },
+  { src: "/images/gallery/pioneer-set.jpg",  alt: "No Pioneer",  accent: "var(--accent)",    objectPosition: "top"    },
+  { src: "/images/gallery/party-night.jpg",  alt: "Party Night", accent: "var(--neon-blue)", objectPosition: "center" },
+  { src: "/images/gallery/neon-setup.jpg",   alt: "Setup",       accent: "var(--neon-pink)", objectPosition: "center" },
+  { src: "/images/gallery/recording.jpg",    alt: "Bastidores",  accent: "var(--accent)",    objectPosition: "center" },
+  { src: "/images/gallery/portrait.jpg",     alt: "GuedZZ",      accent: "var(--neon-red)",  objectPosition: "top"    },
+  { src: "/images/guedzz.jpg",               alt: "GuedZZ",      accent: "var(--neon-blue)", objectPosition: "top"    },
 ];
 
 export default function PhotoGallery() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef     = useRef<HTMLDivElement>(null);
+  const x            = useMotionValue(0);
+
+  // Fix 3: scroll com 2 dedos no touchpad / roda do mouse
+  const handleWheel = useCallback(
+    (e: WheelEvent) => {
+      const container = containerRef.current;
+      const track     = trackRef.current;
+      if (!container || !track) return;
+
+      // Se o scroll for predominantemente vertical, não interfere
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX) * 2) return;
+
+      e.preventDefault();
+
+      const delta = e.deltaX !== 0 ? e.deltaX : e.deltaY;
+      const minX  = -(track.offsetWidth - container.offsetWidth);
+      const maxX  = 0;
+      const newX  = Math.max(minX, Math.min(maxX, x.get() - delta));
+      x.set(newX);
+    },
+    [x]
+  );
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    container.addEventListener("wheel", handleWheel, { passive: false });
+    return () => container.removeEventListener("wheel", handleWheel);
+  }, [handleWheel]);
 
   return (
     <section className="py-16 overflow-hidden">
@@ -73,11 +73,14 @@ export default function PhotoGallery() {
         ref={containerRef}
         className="relative overflow-hidden cursor-grab active:cursor-grabbing select-none"
       >
+        {/* Fix 3: style={{ x }} conecta o motion value ao drag e ao wheel */}
         <motion.div
+          ref={trackRef}
           drag="x"
           dragConstraints={containerRef}
           dragElastic={0.08}
           dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
+          style={{ x }}
           className="flex gap-4 px-5 w-max"
         >
           {photos.map((photo, i) => (
@@ -87,16 +90,18 @@ export default function PhotoGallery() {
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
             >
+              {/* Fix 4: sizes correto para mobile + eager no primeiro */}
               <Image
                 src={photo.src}
                 alt={photo.alt}
                 fill
+                sizes="(max-width: 768px) 256px, 320px"
                 className="object-cover pointer-events-none"
                 style={{ objectPosition: photo.objectPosition }}
                 draggable={false}
+                priority={i === 0}
               />
 
-              {/* Neon hover overlay */}
               <motion.div
                 className="absolute inset-0 pointer-events-none"
                 initial={{ opacity: 0 }}
@@ -108,7 +113,6 @@ export default function PhotoGallery() {
                 }}
               />
 
-              {/* Caption on hover */}
               <motion.div
                 className="absolute bottom-0 left-0 right-0 p-4 pointer-events-none"
                 initial={{ opacity: 0, y: 8 }}
@@ -123,7 +127,6 @@ export default function PhotoGallery() {
                 </p>
               </motion.div>
 
-              {/* Corner accent */}
               <div
                 className="absolute top-0 right-0 w-6 h-6 border-t border-r rounded-tr-xl opacity-50"
                 style={{ borderColor: photo.accent }}
@@ -132,7 +135,6 @@ export default function PhotoGallery() {
           ))}
         </motion.div>
 
-        {/* Edge fades */}
         <div
           className="absolute inset-y-0 left-0 w-16 pointer-events-none z-10"
           style={{ background: "linear-gradient(to right, var(--background), transparent)" }}
