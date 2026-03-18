@@ -16,24 +16,39 @@ const taglines = [
 
 export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
+  const hoveringRef = useRef(false);
 
-  const handleGlitchStart = () => {
+  useEffect(() => {
     const el = titleRef.current;
     if (!el) return;
-    el.classList.remove("glitch-text");
-    el.classList.add("hero-glitch-active");
-  };
 
-  const handleGlitchEnd = () => {
-    const el = titleRef.current;
-    if (!el) return;
-    const stop = () => {
-      el.classList.remove("hero-glitch-active");
-      el.classList.add("glitch-text");
-      el.removeEventListener("animationiteration", stop);
+    const onIteration = () => {
+      if (!hoveringRef.current) {
+        el.classList.remove("hero-glitch-active");
+        el.classList.add("glitch-text");
+        el.removeEventListener("animationiteration", onIteration);
+      }
     };
-    el.addEventListener("animationiteration", stop);
-  };
+
+    const onEnter = () => {
+      hoveringRef.current = true;
+      if (!el.classList.contains("hero-glitch-active")) {
+        el.classList.remove("glitch-text");
+        el.classList.add("hero-glitch-active");
+        el.addEventListener("animationiteration", onIteration);
+      }
+    };
+
+    const onLeave = () => { hoveringRef.current = false; };
+
+    el.addEventListener("mouseenter", onEnter);
+    el.addEventListener("mouseleave", onLeave);
+    return () => {
+      el.removeEventListener("mouseenter", onEnter);
+      el.removeEventListener("mouseleave", onLeave);
+      el.removeEventListener("animationiteration", onIteration);
+    };
+  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -141,8 +156,6 @@ export default function Hero() {
           <h1
             className="glitch-text text-7xl md:text-9xl lg:text-[11rem] font-black tracking-tighter leading-none text-white mb-6 select-none"
             ref={titleRef}
-            onMouseEnter={handleGlitchStart}
-            onMouseLeave={handleGlitchEnd}
           >
             GuedZZ
           </h1>
