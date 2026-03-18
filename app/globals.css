@@ -201,45 +201,40 @@ body::before {
 /* ─── Hero Title: TV ligando de lado ─────────────────────────── */
 /* ─── Hero Title: distorção de sinal / choque elétrico ──────── */
 @keyframes hero-glitch {
+  /* Glitch acontece nos primeiros 55% (~0.9s), depois pausa natural */
   0%  { transform: none; text-shadow: none; filter: none; }
 
-  /* Choque inicial — impacto horizontal forte */
-  8%  { transform: translateX(-16px) skewX(-10deg);
+  5%  { transform: translateX(-16px) skewX(-10deg);
         text-shadow: 18px 0 #00C8FF, -18px 0 #FF00AA;
         filter: brightness(2); }
-  14% { transform: translateX(14px) skewX(8deg);
+  9%  { transform: translateX(14px) skewX(8deg);
         text-shadow: -16px 0 #FF00AA, 16px 0 #00C8FF;
         filter: brightness(1.8); }
-
-  /* Sinal falhando — bandas deslocadas */
-  20% { transform: translateX(-10px);
+  13% { transform: translateX(-10px);
         text-shadow: 22px 0 #00C8FF, -22px 0 #FF00AA;
         clip-path: inset(25% 0 45% 0);
         filter: brightness(1.5); }
-  24% { transform: translateX(8px) skewX(-5deg);
+  16% { transform: translateX(8px) skewX(-5deg);
         text-shadow: -14px 0 #FF00AA, 14px 0 #00C8FF;
         clip-path: inset(55% 0 10% 0); }
-  28% { transform: translateX(-6px);
+  19% { transform: translateX(-6px);
         text-shadow: 10px 0 #00C8FF, -10px 0 #FF00AA;
         clip-path: none; }
-
-  /* Segundo impacto menor */
-  36% { transform: translateX(10px) skewX(6deg);
+  24% { transform: translateX(10px) skewX(6deg);
         text-shadow: -8px 0 #00C8FF, 8px 0 #FF00AA; }
-  42% { transform: translateX(-7px) skewX(-4deg);
+  28% { transform: translateX(-7px) skewX(-4deg);
         text-shadow: 6px 0 #FF00AA, -6px 0 #00C8FF; }
-
-  /* Sinal voltando */
-  52% { transform: translateX(4px);
+  34% { transform: translateX(4px);
         text-shadow: 4px 0 #00C8FF, -4px 0 #FF00AA; }
-  62% { transform: translateX(-2px);
+  40% { transform: translateX(-2px);
         text-shadow: 2px 0 #FF00AA, -2px 0 #00C8FF; }
-  76% { transform: translateX(1px);
+  48% { transform: translateX(1px);
         text-shadow: 1px 0 #00C8FF, -1px 0 #FF00AA; }
 
-  100% { transform: none; text-shadow: none; clip-path: none; filter: none; }
+  /* Sinal volta — pausa antes do próximo loop */
+  55%, 100% { transform: none; text-shadow: none; clip-path: none; filter: none; }
 }
 
 .hero-glitch-active {
-  animation: hero-glitch 0.9s linear infinite;
+  animation: hero-glitch 1.6s linear infinite;
 }

@@ -27,8 +27,12 @@ export default function Hero() {
   const handleGlitchEnd = () => {
     const el = titleRef.current;
     if (!el) return;
-    el.classList.remove("hero-glitch-active");
-    el.classList.add("glitch-text");
+    const stop = () => {
+      el.classList.remove("hero-glitch-active");
+      el.classList.add("glitch-text");
+      el.removeEventListener("animationiteration", stop);
+    };
+    el.addEventListener("animationiteration", stop);
   };
 
   return (
