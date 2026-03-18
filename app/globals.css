@@ -241,5 +241,5 @@ body::before {
 }
 
 .hero-glitch-active {
-  animation: hero-glitch 0.9s linear forwards;
+  animation: hero-glitch 0.9s linear infinite;
 }

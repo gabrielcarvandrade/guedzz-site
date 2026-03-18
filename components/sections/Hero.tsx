@@ -16,20 +16,20 @@ const taglines = [
 
 export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleGlitch = () => {
+  const handleGlitchStart = () => {
     const el = titleRef.current;
-    if (!el || el.classList.contains("hero-glitch-active")) return;
+    if (!el) return;
     el.classList.remove("glitch-text");
     el.classList.add("hero-glitch-active");
-    timerRef.current = setTimeout(() => {
-      el.classList.remove("hero-glitch-active");
-      el.classList.add("glitch-text");
-    }, 720);
   };
 
-  useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
+  const handleGlitchEnd = () => {
+    const el = titleRef.current;
+    if (!el) return;
+    el.classList.remove("hero-glitch-active");
+    el.classList.add("glitch-text");
+  };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -137,7 +137,8 @@ export default function Hero() {
           <h1
             className="glitch-text text-7xl md:text-9xl lg:text-[11rem] font-black tracking-tighter leading-none text-white mb-6 select-none"
             ref={titleRef}
-            onMouseEnter={handleGlitch}
+            onMouseEnter={handleGlitchStart}
+            onMouseLeave={handleGlitchEnd}
           >
             GuedZZ
           </h1>
