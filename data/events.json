@@ -1,0 +1,74 @@
+[
+  {
+    "id": "1",
+    "date": "2026-04-12T22:00:00",
+    "title": "Open Format Night",
+    "venue": "Club D-Edge",
+    "city": "São Paulo, SP",
+    "ticketUrl": "#",
+    "past": false
+  },
+  {
+    "id": "2",
+    "date": "2026-04-25T23:00:00",
+    "title": "Festival Electronize",
+    "venue": "Arena Anhembi",
+    "city": "São Paulo, SP",
+    "ticketUrl": "#",
+    "past": false
+  },
+  {
+    "id": "3",
+    "date": "2026-05-10T21:00:00",
+    "title": "Noite Eletrônica",
+    "venue": "Green Valley",
+    "city": "Camboriú, SC",
+    "ticketUrl": "#",
+    "past": false
+  },
+  {
+    "id": "4",
+    "date": "2026-05-23T22:00:00",
+    "title": "Resident Night",
+    "venue": "Club Warung",
+    "city": "Itajaí, SC",
+    "ticketUrl": "#",
+    "past": false
+  },
+  {
+    "id": "5",
+    "date": "2026-06-07T22:00:00",
+    "title": "Amazonas Music Fest",
+    "venue": "Palácio Rio Negro",
+    "city": "Manaus, AM",
+    "ticketUrl": "#",
+    "past": false
+  },
+  {
+    "id": "6",
+    "date": "2026-07-19T21:00:00",
+    "title": "Verão Eletrônico",
+    "venue": "Espaço das Américas",
+    "city": "São Paulo, SP",
+    "ticketUrl": "#",
+    "past": false
+  },
+  {
+    "id": "7",
+    "date": "2026-01-15T22:00:00",
+    "title": "Réveillon Set",
+    "venue": "Club XYZ",
+    "city": "Rio de Janeiro, RJ",
+    "ticketUrl": "#",
+    "past": true
+  },
+  {
+    "id": "8",
+    "date": "2026-02-20T23:00:00",
+    "title": "Carnaval Eletrônico",
+    "venue": "Largo da Batata",
+    "city": "São Paulo, SP",
+    "ticketUrl": "#",
+    "past": true
+  }
+]

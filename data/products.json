@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "slug": "camiseta-roots-frequencies",
+    "name": "Camiseta Roots & Frequencies",
+    "price": 89.90,
+    "images": ["/images/products/camiseta-rf-frente.jpg", "/images/products/camiseta-rf-costas.jpg"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta 100% algodão com estampa exclusiva do álbum Roots & Frequencies. Corte unissex, lavagem à máquina.",
+    "featured": true
+  },
+  {
+    "id": "2",
+    "slug": "camiseta-amazonia-dub",
+    "name": "Camiseta Amazônia Dub",
+    "price": 99.90,
+    "images": ["/images/products/camiseta-ad-frente.jpg", "/images/products/camiseta-ad-costas.jpg"],
+    "sizes": ["P", "M", "G", "GG", "XGG"],
+    "description": "Camiseta oversized com arte exclusiva inspirada na Amazônia. Tecido premium 30.1.",
+    "featured": true
+  },
+  {
+    "id": "3",
+    "slug": "camiseta-para-waves",
+    "name": "Camiseta Pará Waves",
+    "price": 89.90,
+    "images": ["/images/products/camiseta-pw-frente.jpg", "/images/products/camiseta-pw-costas.jpg"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Camiseta com estampa ondulatória inspirada nas culturas do Pará.",
+    "featured": true
+  },
+  {
+    "id": "4",
+    "slug": "moletom-ritual-eletronico",
+    "name": "Moletom Ritual Eletrônico",
+    "price": 189.90,
+    "images": ["/images/products/moletom-re-frente.jpg", "/images/products/moletom-re-costas.jpg"],
+    "sizes": ["P", "M", "G", "GG"],
+    "description": "Moletom fechado com capuz, bordado frontal com o logotipo Ritual Eletrônico. Forro interno macio.",
+    "featured": false
+  },
+  {
+    "id": "5",
+    "slug": "tote-bag-logo",
+    "name": "Tote Bag Logo",
+    "price": 49.90,
+    "images": ["/images/products/tote-bag-frente.jpg"],
+    "sizes": ["Único"],
+    "description": "Ecobag de lona 100% algodão com logo bordado. Alças reforçadas.",
+    "featured": false
+  },
+  {
+    "id": "6",
+    "slug": "bone-marajo-bass",
+    "name": "Boné Marajó Bass",
+    "price": 59.90,
+    "images": ["/images/products/bone-mb-frente.jpg"],
+    "sizes": ["Único"],
+    "description": "Boné dad hat aba curva com bordado Marajó Bass. Ajuste traseiro.",
+    "featured": false
+  }
+]
