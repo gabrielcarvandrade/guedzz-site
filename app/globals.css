@@ -199,42 +199,38 @@ body::before {
 }
 
 /* ─── Hero Title: TV ligando de lado ─────────────────────────── */
-/* ─── Hero Title: distorção de sinal / choque elétrico ──────── */
+/* ─── Hero Title: distorção contínua / logo quebrando ───────── */
 @keyframes hero-glitch {
-  /* Glitch acontece nos primeiros 55% (~0.9s), depois pausa natural */
-  0%  { transform: none; text-shadow: none; filter: none; }
-
-  5%  { transform: translateX(-16px) skewX(-10deg);
-        text-shadow: 18px 0 #00C8FF, -18px 0 #FF00AA;
-        filter: brightness(2); }
-  9%  { transform: translateX(14px) skewX(8deg);
-        text-shadow: -16px 0 #FF00AA, 16px 0 #00C8FF;
-        filter: brightness(1.8); }
-  13% { transform: translateX(-10px);
-        text-shadow: 22px 0 #00C8FF, -22px 0 #FF00AA;
-        clip-path: inset(25% 0 45% 0);
-        filter: brightness(1.5); }
-  16% { transform: translateX(8px) skewX(-5deg);
-        text-shadow: -14px 0 #FF00AA, 14px 0 #00C8FF;
-        clip-path: inset(55% 0 10% 0); }
-  19% { transform: translateX(-6px);
-        text-shadow: 10px 0 #00C8FF, -10px 0 #FF00AA;
-        clip-path: none; }
-  24% { transform: translateX(10px) skewX(6deg);
-        text-shadow: -8px 0 #00C8FF, 8px 0 #FF00AA; }
-  28% { transform: translateX(-7px) skewX(-4deg);
-        text-shadow: 6px 0 #FF00AA, -6px 0 #00C8FF; }
-  34% { transform: translateX(4px);
-        text-shadow: 4px 0 #00C8FF, -4px 0 #FF00AA; }
-  40% { transform: translateX(-2px);
-        text-shadow: 2px 0 #FF00AA, -2px 0 #00C8FF; }
-  48% { transform: translateX(1px);
-        text-shadow: 1px 0 #00C8FF, -1px 0 #FF00AA; }
-
-  /* Sinal volta — pausa antes do próximo loop */
-  55%, 100% { transform: none; text-shadow: none; clip-path: none; filter: none; }
+  0%   { transform: none; text-shadow: none; filter: none; clip-path: none; }
+  8%   { transform: translateX(-14px) skewX(-8deg);
+         text-shadow: 16px 0 #00C8FF, -16px 0 #FF00AA;
+         filter: brightness(1.8); }
+  18%  { transform: translateX(12px) skewX(6deg);
+         text-shadow: -14px 0 #FF00AA, 14px 0 #00C8FF;
+         clip-path: inset(22% 0 48% 0); }
+  27%  { transform: translateX(-9px);
+         text-shadow: 18px 0 #00C8FF, -18px 0 #FF00AA;
+         clip-path: inset(58% 0 6% 0); }
+  36%  { transform: translateX(10px) skewX(5deg);
+         text-shadow: -10px 0 #00C8FF, 10px 0 #FF00AA;
+         clip-path: none; }
+  45%  { transform: translateX(-7px) skewX(-4deg);
+         text-shadow: 8px 0 #FF00AA, -8px 0 #00C8FF; }
+  55%  { transform: translateX(9px) skewX(3deg);
+         text-shadow: -12px 0 #00C8FF, 12px 0 #FF00AA;
+         clip-path: inset(38% 0 28% 0); }
+  64%  { transform: translateX(-6px);
+         text-shadow: 7px 0 #FF00AA, -7px 0 #00C8FF;
+         clip-path: none; }
+  73%  { transform: translateX(5px) skewX(-3deg);
+         text-shadow: -5px 0 #00C8FF, 5px 0 #FF00AA; }
+  83%  { transform: translateX(-4px);
+         text-shadow: 4px 0 #FF00AA, -4px 0 #00C8FF; }
+  92%  { transform: translateX(2px);
+         text-shadow: -2px 0 #00C8FF, 2px 0 #FF00AA; }
+  100% { transform: none; text-shadow: none; clip-path: none; filter: none; }
 }
 
 .hero-glitch-active {
-  animation: hero-glitch 1.6s linear infinite;
+  animation: hero-glitch 1.3s linear infinite;
 }
