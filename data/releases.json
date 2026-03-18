@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "title": "Roots & Frequencies",
+    "type": "album",
+    "year": 2025,
+    "coverImage": "/images/covers/roots-frequencies.jpg",
+    "spotifyUrl": "https://open.spotify.com/user/bernardoguedes796?si=0QTF3IMoRQya52C1IjBS6A",
+    "soundcloudUrl": "https://soundcloud.com/guedz-228285479",
+    "description": "Álbum de estreia que une batidas eletrônicas com grooves hipnóticos."
+  },
+  {
+    "id": "2",
+    "title": "Amazônia Dub",
+    "type": "ep",
+    "year": 2024,
+    "coverImage": "/images/covers/amazonia-dub.jpg",
+    "spotifyUrl": "https://open.spotify.com/user/bernardoguedes796?si=0QTF3IMoRQya52C1IjBS6A",
+    "soundcloudUrl": "https://soundcloud.com/guedz-228285479",
+    "description": "EP que captura texturas profundas e atmosferas eletrônicas densas."
+  },
+  {
+    "id": "3",
+    "title": "Marajó Bass",
+    "type": "single",
+    "year": 2024,
+    "coverImage": "/images/covers/marajo-bass.jpg",
+    "spotifyUrl": "https://open.spotify.com/user/bernardoguedes796?si=0QTF3IMoRQya52C1IjBS6A",
+    "soundcloudUrl": "https://soundcloud.com/guedz-228285479",
+    "description": "Single minimalista com baixos pulsantes e percussão cirúrgica."
+  },
+  {
+    "id": "4",
+    "title": "Terra & Eletricidade",
+    "type": "ep",
+    "year": 2023,
+    "coverImage": "/images/covers/terra-eletricidade.jpg",
+    "spotifyUrl": "https://open.spotify.com/user/bernardoguedes796?si=0QTF3IMoRQya52C1IjBS6A",
+    "soundcloudUrl": "https://soundcloud.com/guedz-228285479",
+    "description": "EP que explora a fusão entre sons orgânicos e síntese eletrônica."
+  },
+  {
+    "id": "5",
+    "title": "Ritual Eletrônico",
+    "type": "single",
+    "year": 2023,
+    "coverImage": "/images/covers/ritual-eletronico.jpg",
+    "spotifyUrl": "https://open.spotify.com/user/bernardoguedes796?si=0QTF3IMoRQya52C1IjBS6A",
+    "soundcloudUrl": "https://soundcloud.com/guedz-228285479",
+    "description": "Groove hipnótico que não larga."
+  },
+  {
+    "id": "6",
+    "title": "Pará Waves",
+    "type": "album",
+    "year": 2022,
+    "coverImage": "/images/covers/para-waves.jpg",
+    "spotifyUrl": "https://open.spotify.com/user/bernardoguedes796?si=0QTF3IMoRQya52C1IjBS6A",
+    "soundcloudUrl": "https://soundcloud.com/guedz-228285479",
+    "description": "Segundo álbum — ondas sonoras entre o house e o minimal."
+  }
+]
