@@ -201,34 +201,44 @@ body::before {
 /* ─── Hero Title: TV ligando de lado ─────────────────────────── */
 /* ─── Hero Title: distorção contínua / logo quebrando ───────── */
 @keyframes hero-glitch {
-  0%   { transform: none; text-shadow: none; filter: none; clip-path: none; }
+  0%   { transform: none; text-shadow: none; filter: none; clip-path: none; color: #fff; }
   8%   { transform: translateX(-14px) skewX(-8deg);
          text-shadow: 16px 0 #00C8FF, -16px 0 #FF00AA;
-         filter: brightness(1.8); }
+         filter: brightness(1.8);
+         color: #A020F0; }
   18%  { transform: translateX(12px) skewX(6deg);
          text-shadow: -14px 0 #FF00AA, 14px 0 #00C8FF;
-         clip-path: inset(22% 0 48% 0); }
+         clip-path: inset(22% 0 48% 0);
+         color: #00C8FF; }
   27%  { transform: translateX(-9px);
          text-shadow: 18px 0 #00C8FF, -18px 0 #FF00AA;
-         clip-path: inset(58% 0 6% 0); }
+         clip-path: inset(58% 0 6% 0);
+         color: #FF00AA; }
   36%  { transform: translateX(10px) skewX(5deg);
          text-shadow: -10px 0 #00C8FF, 10px 0 #FF00AA;
-         clip-path: none; }
+         clip-path: none;
+         color: #fff; }
   45%  { transform: translateX(-7px) skewX(-4deg);
-         text-shadow: 8px 0 #FF00AA, -8px 0 #00C8FF; }
+         text-shadow: 8px 0 #FF00AA, -8px 0 #00C8FF;
+         color: #A020F0; }
   55%  { transform: translateX(9px) skewX(3deg);
          text-shadow: -12px 0 #00C8FF, 12px 0 #FF00AA;
-         clip-path: inset(38% 0 28% 0); }
+         clip-path: inset(38% 0 28% 0);
+         color: #00C8FF; }
   64%  { transform: translateX(-6px);
          text-shadow: 7px 0 #FF00AA, -7px 0 #00C8FF;
-         clip-path: none; }
+         clip-path: none;
+         color: #FF00AA; }
   73%  { transform: translateX(5px) skewX(-3deg);
-         text-shadow: -5px 0 #00C8FF, 5px 0 #FF00AA; }
+         text-shadow: -5px 0 #00C8FF, 5px 0 #FF00AA;
+         color: #A020F0; }
   83%  { transform: translateX(-4px);
-         text-shadow: 4px 0 #FF00AA, -4px 0 #00C8FF; }
+         text-shadow: 4px 0 #FF00AA, -4px 0 #00C8FF;
+         color: #fff; }
   92%  { transform: translateX(2px);
-         text-shadow: -2px 0 #00C8FF, 2px 0 #FF00AA; }
-  100% { transform: none; text-shadow: none; clip-path: none; filter: none; }
+         text-shadow: -2px 0 #00C8FF, 2px 0 #FF00AA;
+         color: #A020F0; }
+  100% { transform: none; text-shadow: none; clip-path: none; filter: none; color: #fff; }
 }
 
 .hero-glitch-active {
