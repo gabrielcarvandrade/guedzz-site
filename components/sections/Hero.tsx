@@ -51,6 +51,33 @@ export default function Hero() {
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 2 }}
       />
 
+      {/* BPM Badge */}
+      <motion.div
+        className="absolute top-8 right-6 z-20 hidden md:flex flex-col items-end gap-0.5"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 3 }}
+      >
+        <div className="flex items-center gap-2">
+          <span
+            className="block w-2 h-2 rounded-full bg-[var(--accent)]"
+            style={{
+              animation: "bpm-pulse 0.469s ease-in-out infinite",
+              boxShadow: "0 0 8px var(--accent), 0 0 16px rgba(160,32,240,0.4)",
+            }}
+          />
+          <span
+            className="text-xs font-mono font-bold tracking-widest"
+            style={{ color: "var(--accent)", textShadow: "var(--glow-purple)" }}
+          >
+            128 BPM
+          </span>
+        </div>
+        <span className="text-[10px] text-[var(--text-muted)] tracking-[0.2em] font-mono">
+          4 / 4
+        </span>
+      </motion.div>
+
       {/* Fine grid */}
       <div
         className="absolute inset-0 opacity-[0.025]"

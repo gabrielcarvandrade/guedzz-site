@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ShoppingBag, Music, Calendar, User, Store } from "lucide-react";
 import { useCartStore } from "@/lib/store";
+import { useScramble } from "@/hooks/useScramble";
 
 const navLinks = [
   { href: "/musicas", label: "Músicas", icon: Music },
@@ -12,6 +13,32 @@ const navLinks = [
   { href: "/bio", label: "Bio", icon: User },
   { href: "/loja", label: "Loja", icon: Store },
 ];
+
+function ScrambleLink({
+  href,
+  label,
+  isActive,
+}: {
+  href: string;
+  label: string;
+  isActive: boolean;
+}) {
+  const { displayText, trigger } = useScramble(label);
+
+  return (
+    <Link
+      href={href}
+      onMouseEnter={trigger}
+      className={`px-4 py-2 rounded-md text-sm font-mono font-medium transition-colors ${
+        isActive
+          ? "text-[var(--accent)]"
+          : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+      }`}
+    >
+      {displayText}
+    </Link>
+  );
+}
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -51,23 +78,17 @@ export default function Header() {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-1">
           {navLinks.map(({ href, label }) => (
-            <Link
+            <ScrambleLink
               key={href}
               href={href}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                pathname === href
-                  ? "text-[var(--accent)]"
-                  : "text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-              }`}
-            >
-              {label}
-            </Link>
+              label={label}
+              isActive={pathname === href}
+            />
           ))}
         </nav>
 
         {/* Right actions */}
         <div className="flex items-center gap-2">
-          {/* Cart button */}
           <button
             onClick={openCart}
             className="relative p-2 rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface)] transition-colors"
@@ -80,7 +101,6 @@ export default function Header() {
             )}
           </button>
 
-          {/* Mobile menu toggle */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="md:hidden p-2 rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--surface)] transition-colors"
