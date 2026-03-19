@@ -1,8 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import EventCard from "@/components/ui/EventCard";
@@ -22,17 +20,15 @@ interface UpcomingEventsProps {
 }
 
 export default function UpcomingEvents({ events }: UpcomingEventsProps) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-
   const upcoming = events.filter((e) => !e.past).slice(0, 3);
 
   return (
-    <section ref={ref} className="bg-[var(--surface)] py-20 relative">
+    <section className="bg-[var(--surface)] py-20 relative">
       <div className="max-w-6xl mx-auto px-5">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6 }}
           className="flex items-end justify-between mb-10"
         >
@@ -40,7 +36,7 @@ export default function UpcomingEvents({ events }: UpcomingEventsProps) {
             <p className="text-[var(--accent)] text-xs font-semibold uppercase tracking-[0.3em] mb-2">
               Shows
             </p>
-            <h2 className="text-3xl md:text-4xl font-bold">Próximos Eventos</h2>
+            <h2 className="text-3xl md:text-4xl font-bold">Proximos Eventos</h2>
           </div>
           <Link
             href="/agenda"
@@ -55,7 +51,8 @@ export default function UpcomingEvents({ events }: UpcomingEventsProps) {
             <motion.div
               key={event.id}
               initial={{ opacity: 0, x: -20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <EventCard event={event} />

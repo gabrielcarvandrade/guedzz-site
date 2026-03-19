@@ -1,8 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ProductCard from "@/components/ui/ProductCard";
@@ -23,14 +21,12 @@ interface FeaturedProductsProps {
 }
 
 export default function FeaturedProducts({ products }: FeaturedProductsProps) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section ref={ref} className="max-w-6xl mx-auto px-5 py-20 relative">
+    <section className="max-w-6xl mx-auto px-5 py-20 relative">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6 }}
         className="flex items-end justify-between mb-10"
       >
@@ -48,12 +44,13 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
         </Link>
       </motion.div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:cols-2 md:grid-cols-3 gap-5">
         {products.map((product, i) => (
           <motion.div
             key={product.id}
             initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
           >
             <ProductCard product={product} />

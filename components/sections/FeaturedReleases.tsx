@@ -1,8 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ReleaseCard from "@/components/ui/ReleaseCard";
@@ -23,14 +21,12 @@ interface FeaturedReleasesProps {
 }
 
 export default function FeaturedReleases({ releases }: FeaturedReleasesProps) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section ref={ref} className="max-w-6xl mx-auto px-5 py-20 relative">
+    <section className="max-w-6xl mx-auto px-5 py-20 relative">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.6 }}
         className="flex items-end justify-between mb-10"
       >
@@ -38,7 +34,7 @@ export default function FeaturedReleases({ releases }: FeaturedReleasesProps) {
           <p className="text-[var(--accent)] text-xs font-semibold uppercase tracking-[0.3em] mb-2">
             Discografia
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold">Últimos Releases</h2>
+          <h2 className="text-3xl md:text-4xl font-bold">Ultimos Releases</h2>
         </div>
         <Link
           href="/musicas"
@@ -53,7 +49,8 @@ export default function FeaturedReleases({ releases }: FeaturedReleasesProps) {
           <motion.div
             key={release.id}
             initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
           >
             <ReleaseCard release={release} showEmbed />
