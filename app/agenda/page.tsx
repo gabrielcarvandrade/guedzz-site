@@ -6,14 +6,27 @@ import { ChevronDown, Calendar, MapPin } from "lucide-react";
 import EventCard from "@/components/ui/EventCard";
 import PageBackground from "@/components/ui/PageBackground";
 import PageHeader from "@/components/ui/PageHeader";
-import eventsData from "@/data/events.json";
+import eventsJson from "@/data/events.json";
+import { client } from "@/lib/sanity";
+import { eventsQuery } from "@/lib/queries";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type EventData = any;
 
 export default function AgendaPage() {
   const [showPast, setShowPast] = useState(false);
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, mins: 0, secs: 0 });
+  const [allEvents, setAllEvents] = useState<EventData[]>(
+    eventsJson.map((e) => ({ ...e, id: String(e.id) }))
+  );
 
-  const upcoming = eventsData.filter((e) => !e.past);
-  const past = eventsData.filter((e) => e.past);
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return;
+    client.fetch(eventsQuery).then((data) => { if (data?.length) setAllEvents(data); });
+  }, []);
+
+  const upcoming = allEvents.filter((e) => !e.past);
+  const past = allEvents.filter((e) => e.past);
   const nextEvent = upcoming[0];
 
   // Countdown timer

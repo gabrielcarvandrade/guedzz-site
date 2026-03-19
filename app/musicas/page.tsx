@@ -1,80 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Play, Clock, Calendar, Disc3, Sparkles } from "lucide-react";
 import PageBackground from "@/components/ui/PageBackground";
 import PageHeader from "@/components/ui/PageHeader";
 
+import releasesJson from "@/data/releases.json";
+import { client } from "@/lib/sanity";
+import { releasesQuery } from "@/lib/queries";
+
 // SoundCloud profile URL
 const SOUNDCLOUD_PROFILE = "guedz-228285479";
 
-// Template releases (placeholders)
-const templateReleases = [
-  {
-    id: 1,
-    title: "Track Name",
-    type: "Original Mix",
-    genre: "Tech House",
-    bpm: 126,
-    date: "2024",
-    cover: "/images/placeholder-cover.jpg",
-  },
-  {
-    id: 2,
-    title: "Track Name",
-    type: "Remix",
-    genre: "House",
-    bpm: 124,
-    date: "2024",
-    cover: "/images/placeholder-cover.jpg",
-  },
-  {
-    id: 3,
-    title: "Track Name",
-    type: "Edit",
-    genre: "Deep House",
-    bpm: 122,
-    date: "2024",
-    cover: "/images/placeholder-cover.jpg",
-  },
-  {
-    id: 4,
-    title: "Track Name",
-    type: "Bootleg",
-    genre: "Tech House",
-    bpm: 128,
-    date: "2023",
-    cover: "/images/placeholder-cover.jpg",
-  },
-  {
-    id: 5,
-    title: "Track Name",
-    type: "Original Mix",
-    genre: "Minimal",
-    bpm: 130,
-    date: "2023",
-    cover: "/images/placeholder-cover.jpg",
-  },
-  {
-    id: 6,
-    title: "Track Name",
-    type: "Remix",
-    genre: "Afro House",
-    bpm: 120,
-    date: "2023",
-    cover: "/images/placeholder-cover.jpg",
-  },
-];
+const filters = ["Todos", "album", "ep", "single"];
+const filterLabel: Record<string, string> = { "Todos": "Todos", "album": "Álbum", "ep": "EP", "single": "Single" };
 
-const filters = ["Todos", "Original Mix", "Remix", "Edit", "Bootleg"];
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ReleaseData = any;
 
 export default function MusicasPage() {
   const [activeFilter, setActiveFilter] = useState("Todos");
+  const [releases, setReleases] = useState<ReleaseData[]>(
+    releasesJson.map((r) => ({ ...r, id: String(r.id) }))
+  );
 
-  const filteredReleases = activeFilter === "Todos" 
-    ? templateReleases 
-    : templateReleases.filter(r => r.type === activeFilter);
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return;
+    client.fetch(releasesQuery).then((data) => { if (data?.length) setReleases(data); });
+  }, []);
+
+  const filteredReleases = activeFilter === "Todos"
+    ? releases
+    : releases.filter((r) => r.type === activeFilter);
 
   return (
     <div className="min-h-screen pt-24 pb-20 relative">
@@ -187,7 +145,7 @@ export default function MusicasPage() {
                   : "border border-[var(--border)] text-[var(--text-muted)] hover:border-[var(--accent)] hover:text-[var(--text-primary)]"
               }`}
             >
-              {filter}
+              {filterLabel[filter] ?? filter}
             </button>
           ))}
         </motion.div>
@@ -201,28 +159,29 @@ export default function MusicasPage() {
         >
           {filteredReleases.map((release, i) => (
             <motion.div
-              key={release.id}
+              key={release.id ?? i}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.1 * i }}
               className="group rounded-xl border border-[var(--border)] bg-[var(--surface)]/50 backdrop-blur-sm overflow-hidden hover:border-[var(--accent)] transition-all duration-300"
             >
-              {/* Cover placeholder */}
+              {/* Cover */}
               <div className="aspect-square bg-gradient-to-br from-[var(--surface)] to-[var(--background)] relative overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Disc3 className="w-20 h-20 text-[var(--border)] group-hover:text-[var(--accent)] transition-colors group-hover:animate-spin-slow" />
-                </div>
-                
-                {/* Play overlay */}
+                {release.coverImage ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={release.coverImage} alt={release.title} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Disc3 className="w-20 h-20 text-[var(--border)] group-hover:text-[var(--accent)] transition-colors" />
+                  </div>
+                )}
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <div className="w-14 h-14 rounded-full bg-[var(--accent)] flex items-center justify-center transform scale-75 group-hover:scale-100 transition-transform">
                     <Play className="w-6 h-6 text-black ml-1" />
                   </div>
                 </div>
-
-                {/* Type badge */}
                 <div className="absolute top-3 left-3">
-                  <span className="px-2 py-1 text-xs font-medium rounded bg-black/60 backdrop-blur-sm">
+                  <span className="px-2 py-1 text-xs font-medium rounded bg-black/60 backdrop-blur-sm capitalize">
                     {release.type}
                   </span>
                 </div>
@@ -234,8 +193,8 @@ export default function MusicasPage() {
                   {release.title}
                 </h3>
                 <div className="flex items-center justify-between text-sm text-[var(--text-muted)]">
-                  <span>{release.genre}</span>
-                  <span>{release.bpm} BPM</span>
+                  <span>{release.genre ?? release.description?.slice(0, 30) ?? ""}</span>
+                  <span>{release.bpm ? `${release.bpm} BPM` : release.year}</span>
                 </div>
               </div>
             </motion.div>

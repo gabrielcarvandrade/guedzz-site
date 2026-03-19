@@ -1,12 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Sparkles, Tag } from "lucide-react";
 import ProductCard from "@/components/ui/ProductCard";
 import PageBackground from "@/components/ui/PageBackground";
 import PageHeader from "@/components/ui/PageHeader";
-import productsData from "@/data/products.json";
+import productsJson from "@/data/products.json";
+import { client } from "@/lib/sanity";
+import { productsQuery } from "@/lib/queries";
 
 const categories = [
   { value: "all", label: "Todos" },
@@ -15,13 +17,24 @@ const categories = [
   { value: "vinil", label: "Vinil" },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ProductData = any;
+
 export default function LojaPage() {
   const [category, setCategory] = useState("all");
+  const [allProducts, setAllProducts] = useState<ProductData[]>(
+    productsJson.map((p) => ({ ...p, id: String(p.id) }))
+  );
+
+  useEffect(() => {
+    if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) return;
+    client.fetch(productsQuery).then((data) => { if (data?.length) setAllProducts(data); });
+  }, []);
 
   const filtered =
     category === "all"
-      ? productsData
-      : productsData.filter((p) => (p as unknown as Record<string, string>).category === category);
+      ? allProducts
+      : allProducts.filter((p) => p.category === category);
 
   return (
     <div className="min-h-screen pt-24 pb-20 relative">

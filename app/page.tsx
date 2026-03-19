@@ -5,11 +5,28 @@ import FeaturedReleases from "@/components/sections/FeaturedReleases";
 import UpcomingEvents from "@/components/sections/UpcomingEvents";
 import FeaturedProducts from "@/components/sections/FeaturedProducts";
 import PhotoGallery from "@/components/sections/PhotoGallery";
-import releasesData from "@/data/releases.json";
-import eventsData from "@/data/events.json";
-import productsData from "@/data/products.json";
+import releasesJson from "@/data/releases.json";
+import eventsJson from "@/data/events.json";
+import productsJson from "@/data/products.json";
+import { client } from "@/lib/sanity";
+import { releasesQuery, eventsQuery, productsQuery } from "@/lib/queries";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const hasSanity = !!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [releasesData, eventsData, productsData]: [any[], any[], any[]] = hasSanity
+    ? await Promise.all([
+        client.fetch(releasesQuery),
+        client.fetch(eventsQuery),
+        client.fetch(productsQuery),
+      ])
+    : [
+        releasesJson.map((r) => ({ ...r, id: String(r.id) })),
+        eventsJson.map((e) => ({ ...e, id: String(e.id) })),
+        productsJson.map((p) => ({ ...p, id: String(p.id) })),
+      ];
+
   const featuredReleases = releasesData.slice(0, 3);
   const featuredProducts = productsData.filter((p) => p.featured);
 
