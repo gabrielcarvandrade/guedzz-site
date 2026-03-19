@@ -76,7 +76,7 @@ export default function AgendaPage() {
               <span className="text-xs uppercase tracking-widest text-[var(--accent)]">Proximo Evento</span>
             </div>
             
-            <h3 className="text-2xl md:text-3xl font-bold mb-2">{nextEvent.name}</h3>
+            <h3 className="text-2xl md:text-3xl font-bold mb-2">{nextEvent.title}</h3>
             
             <div className="flex flex-wrap gap-4 text-[var(--text-muted)] text-sm mb-6">
               <span className="flex items-center gap-1.5">
@@ -85,7 +85,7 @@ export default function AgendaPage() {
               </span>
               <span className="flex items-center gap-1.5">
                 <MapPin size={14} className="text-[var(--neon-pink)]" />
-                {nextEvent.location}
+                {nextEvent.venue} — {nextEvent.city}
               </span>
             </div>
             

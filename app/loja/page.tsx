@@ -21,7 +21,7 @@ export default function LojaPage() {
   const filtered =
     category === "all"
       ? productsData
-      : productsData.filter((p) => p.category === category);
+      : productsData.filter((p) => (p as unknown as Record<string, string>).category === category);
 
   return (
     <div className="min-h-screen pt-24 pb-20 relative">
