@@ -27,7 +27,7 @@ export default function FeaturedReleases({ releases }: FeaturedReleasesProps) {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="max-w-6xl mx-auto px-5 py-20">
+    <section ref={ref} className="max-w-6xl mx-auto px-5 py-20 relative">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}

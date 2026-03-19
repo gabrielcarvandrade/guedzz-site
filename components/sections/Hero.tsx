@@ -100,8 +100,10 @@ export default function Hero() {
             src="/images/guedzz.jpg"
             alt=""
             fill
+            sizes="(max-width: 768px) 100vw, 66vw"
             className="object-cover object-top"
             priority
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/65 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent" />

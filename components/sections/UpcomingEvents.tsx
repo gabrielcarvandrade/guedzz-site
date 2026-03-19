@@ -28,7 +28,7 @@ export default function UpcomingEvents({ events }: UpcomingEventsProps) {
   const upcoming = events.filter((e) => !e.past).slice(0, 3);
 
   return (
-    <section ref={ref} className="bg-[var(--surface)] py-20">
+    <section ref={ref} className="bg-[var(--surface)] py-20 relative">
       <div className="max-w-6xl mx-auto px-5">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
