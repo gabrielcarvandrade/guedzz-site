@@ -1,19 +1,32 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useScroll, useTransform, motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 export default function ScrollProgress() {
   const [mounted, setMounted] = useState(false);
-  
+  const scrollProgress = useMotionValue(0);
+  const smoothProgress = useSpring(scrollProgress, { stiffness: 100, damping: 30 });
+  const width = useTransform(smoothProgress, (v) => `${v}%`);
+
   useEffect(() => {
     setMounted(true);
-  }, []);
 
-  const { scrollYProgress } = useScroll({
-    offset: ["start start", "end end"],
-  });
-  const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+    const updateProgress = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollHeight > 0 ? window.scrollY / scrollHeight : 0;
+      scrollProgress.set(progress * 100);
+    };
+
+    updateProgress();
+    window.addEventListener("scroll", updateProgress, { passive: true });
+    window.addEventListener("resize", updateProgress, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", updateProgress);
+      window.removeEventListener("resize", updateProgress);
+    };
+  }, [scrollProgress]);
 
   if (!mounted) return null;
 
