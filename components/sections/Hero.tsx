@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import { motion, useMotionValue, useSpring, useScroll, useTransform } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ChevronDown, Music, Calendar } from "lucide-react";
@@ -9,7 +9,7 @@ import Button from "@/components/ui/Button";
 import AnimatedWaves from "@/components/ui/AnimatedWaves";
 
 const taglines = [
-  { text: "Music is the answer 🎶", color: "var(--accent)", glow: "var(--glow-purple)" },
+  { text: "Music is the answer", color: "var(--accent)", glow: "var(--glow-purple)" },
   { text: "Art in motion.", color: "var(--neon-blue)", glow: "var(--glow-blue)" },
   { text: "Soul in expansion.", color: "var(--neon-pink)", glow: "var(--glow-pink)" },
 ];
@@ -19,9 +19,23 @@ export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const hoveringRef = useRef(false);
 
-  // Scroll parallax na foto
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end start"] });
-  const photoY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  // Manual scroll parallax (avoids Framer Motion container warning)
+  const scrollY = useMotionValue(0);
+  const photoY = useTransform(scrollY, [0, 1], ["0%", "18%"]);
+
+  useEffect(() => {
+    const updateScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const sectionHeight = rect.height;
+      const progress = Math.max(0, Math.min(1, -rect.top / sectionHeight));
+      scrollY.set(progress);
+    };
+
+    updateScroll();
+    window.addEventListener("scroll", updateScroll, { passive: true });
+    return () => window.removeEventListener("scroll", updateScroll);
+  }, [scrollY]);
 
   // Mouse parallax nos blobs
   const rawX = useMotionValue(0);
@@ -86,8 +100,10 @@ export default function Hero() {
             src="/images/guedzz.jpg"
             alt=""
             fill
+            sizes="(max-width: 768px) 100vw, 66vw"
             className="object-cover object-top"
             priority
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-[#080808]/65 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-transparent to-transparent" />
