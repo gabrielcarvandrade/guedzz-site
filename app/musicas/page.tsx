@@ -10,7 +10,7 @@ import PageHeader from "@/components/ui/PageHeader";
 const SOUNDCLOUD_PROFILE = "guedz-228285479";
 
 export default function MusicasPage() {
-  const [activeTab, setActiveTab] = useState<"tracks" | "likes">("tracks");
+  const [activeTab, setActiveTab] = useState<"all" | "tracks" | "reposts" | "likes">("all");
 
   return (
     <div className="min-h-screen pt-24 pb-20 relative">
@@ -73,7 +73,9 @@ export default function MusicasPage() {
           className="flex gap-2 mb-8"
         >
           {[
-            { value: "tracks" as const, label: "Todas as Tracks" },
+            { value: "all" as const, label: "Tudo" },
+            { value: "tracks" as const, label: "Originais" },
+            { value: "reposts" as const, label: "Reposts/Remixes" },
             { value: "likes" as const, label: "Curtidas" },
           ].map(({ value, label }) => (
             <button
@@ -111,7 +113,10 @@ export default function MusicasPage() {
           <div className="p-5 border-b border-[var(--border)] flex items-center gap-3">
             <div className="w-2 h-2 rounded-full bg-[var(--accent)] animate-pulse" />
             <span className="text-sm font-medium">
-              {activeTab === "tracks" ? "Todas as Producoes" : "Tracks Curtidas"}
+              {activeTab === "all" && "Todas as Tracks"}
+              {activeTab === "tracks" && "Producoes Originais"}
+              {activeTab === "reposts" && "Reposts e Remixes"}
+              {activeTab === "likes" && "Tracks Curtidas"}
             </span>
             
             {/* Audio visualizer */}
