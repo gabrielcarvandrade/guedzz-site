@@ -31,7 +31,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Image */}
         <div className="relative aspect-square overflow-hidden bg-[var(--border)]">
           <Image
-            src={product.images[0]}
+            src={product.images?.[0] ?? ""}
             alt={product.name}
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -59,7 +59,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <h3 className="font-medium text-[var(--text-primary)] leading-tight">{product.name}</h3>
           <p className="text-[var(--accent)] font-semibold mt-1">{formattedPrice}</p>
           <p className="text-[var(--text-muted)] text-xs mt-1">
-            Tamanhos: {product.sizes.join(", ")}
+            Tamanhos: {product.sizes?.join(", ") ?? "—"}
           </p>
         </div>
       </div>
