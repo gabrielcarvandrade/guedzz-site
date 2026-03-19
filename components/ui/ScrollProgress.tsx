@@ -1,10 +1,21 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 
 export default function ScrollProgress() {
-  const { scrollYProgress } = useScroll();
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    offset: ["start start", "end end"],
+  });
   const width = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  if (!mounted) return null;
 
   return (
     <div className="fixed top-0 left-0 right-0 z-[9999] h-[2px] bg-transparent pointer-events-none">
