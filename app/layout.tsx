@@ -27,14 +27,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
-      <body className={`${inter.variable} antialiased bg-[var(--background)] text-[var(--text-primary)]`}>
+      <body className={`${inter.variable} antialiased bg-[var(--background)] text-[var(--text-primary)] relative`}>
         <IntroScreen />
         <ScrollProgress />
         <ClickRipple />
         <SectionColorTracker />
         <CustomCursor />
         <Header />
-        <main>{children}</main>
+        <main className="relative">{children}</main>
         <Footer />
         <CartDrawer />
       </body>
