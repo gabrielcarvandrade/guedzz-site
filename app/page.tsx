@@ -14,18 +14,27 @@ import { releasesQuery, eventsQuery, productsQuery } from "@/lib/queries";
 export default async function HomePage() {
   const hasSanity = !!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 
+  const jsonReleases = releasesJson.map((r) => ({ ...r, id: String(r.id) }));
+  const jsonEvents   = eventsJson.map((e) => ({ ...e, id: String(e.id) }));
+  const jsonProducts = productsJson.map((p) => ({ ...p, id: String(p.id) }));
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [releasesData, eventsData, productsData]: [any[], any[], any[]] = hasSanity
-    ? await Promise.all([
+  let [releasesData, eventsData, productsData]: [any[], any[], any[]] = [jsonReleases, jsonEvents, jsonProducts];
+
+  if (hasSanity) {
+    try {
+      const [r, e, p] = await Promise.all([
         client.fetch(releasesQuery),
         client.fetch(eventsQuery),
         client.fetch(productsQuery),
-      ])
-    : [
-        releasesJson.map((r) => ({ ...r, id: String(r.id) })),
-        eventsJson.map((e) => ({ ...e, id: String(e.id) })),
-        productsJson.map((p) => ({ ...p, id: String(p.id) })),
-      ];
+      ]);
+      if (r?.length) releasesData = r;
+      if (e?.length) eventsData   = e;
+      if (p?.length) productsData = p;
+    } catch {
+      // Sanity unavailable — keep JSON fallback
+    }
+  }
 
   const featuredReleases = releasesData.slice(0, 3);
   const featuredProducts = productsData.filter((p) => p.featured);
