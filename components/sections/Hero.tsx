@@ -72,7 +72,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section ref={sectionRef} onMouseMove={handleMouseMove} className="relative min-h-screen flex items-center justify-center overflow-hidden" style={{ position: "relative" }}>
+    <section ref={sectionRef} onMouseMove={handleMouseMove} className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Deep black base */}
       <div className="absolute inset-0 bg-[#080808]" />
 
