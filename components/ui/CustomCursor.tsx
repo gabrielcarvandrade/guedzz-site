@@ -1,11 +1,52 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 const TRAIL_LENGTH = 10;
 
+function RgbCursor() {
+  const dotRef = useRef<HTMLDivElement>(null);
+  const mouse = useRef({ x: -300, y: -300 });
+  const hue = useRef(0);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      mouse.current = { x: e.clientX, y: e.clientY };
+    };
+    window.addEventListener("mousemove", onMove);
+
+    let raf: number;
+    const loop = () => {
+      hue.current = (hue.current + 1.5) % 360;
+      const color = `hsl(${hue.current}, 100%, 55%)`;
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate(${mouse.current.x - 5}px, ${mouse.current.y - 5}px)`;
+        dotRef.current.style.boxShadow = `0 0 8px ${color}, 0 0 20px ${color}`;
+        dotRef.current.style.background = color;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={dotRef}
+      className="fixed top-0 left-0 w-[10px] h-[10px] rounded-full pointer-events-none z-[9999]"
+      style={{ transition: "background 0.1s" }}
+    />
+  );
+}
+
 export default function CustomCursor() {
-  // Fix 2: detect touch device on mount, render nothing on mobile
+  const pathname = usePathname();
+  const isStudio = pathname?.startsWith("/studio");
   const [isTouch, setIsTouch] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -24,7 +65,7 @@ export default function CustomCursor() {
   );
 
   useEffect(() => {
-    if (isTouch === null || isTouch) return;
+    if (isTouch === null || isTouch || isStudio) return;
 
     document.documentElement.classList.add("hide-cursor");
 
@@ -89,10 +130,10 @@ export default function CustomCursor() {
       document.removeEventListener("mouseout", onOut);
       cancelAnimationFrame(raf);
     };
-  }, [isTouch]);
+  }, [isTouch, isStudio]);
 
-  // Fix 2: não renderiza nada em touch/mobile
   if (isTouch === null || isTouch) return null;
+  if (isStudio) return <RgbCursor />;
 
   return (
     <>

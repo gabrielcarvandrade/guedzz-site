@@ -37,10 +37,20 @@ export const product = defineType({
     defineField({
       name: "sizes",
       title: "Tamanhos disponíveis",
-      description: "Clique em '+' e adicione um tamanho por vez. Ex: P, M, G, GG, Único",
+      description: "Marque os tamanhos disponíveis para este produto.",
       type: "array",
       of: [{ type: "string" }],
-      options: { layout: "tags" },
+      options: {
+        list: [
+          { title: "PP", value: "PP" },
+          { title: "P", value: "P" },
+          { title: "M", value: "M" },
+          { title: "G", value: "G" },
+          { title: "GG", value: "GG" },
+          { title: "XGG", value: "XGG" },
+          { title: "Único (sem tamanho)", value: "Único" },
+        ],
+      },
     }),
     defineField({
       name: "description",
