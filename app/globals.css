@@ -47,9 +47,7 @@ html.hide-cursor * {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* scroll-behavior is handled via data-scroll-behavior attribute in layout.tsx */
 
 body {
   background: var(--background);
