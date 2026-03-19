@@ -30,20 +30,17 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="rounded-lg overflow-hidden border border-white/10 bg-white/[0.03] backdrop-blur-sm hover:border-[var(--accent)]/50 transition-all duration-300" style={{ transition: "border-color 0.3s, box-shadow 0.3s" }} onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 30px rgba(160,32,240,0.08)")} onMouseLeave={e => (e.currentTarget.style.boxShadow = "none")}>
         {/* Image */}
         <div className="relative aspect-square overflow-hidden bg-[var(--border)]">
-          <Image
-            src={product.images?.[0] ?? ""}
-            alt={product.name}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-500"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = "none";
-            }}
-          />
-          {/* Fallback */}
           <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[var(--surface)] to-[var(--border)]">
             <Package size={48} className="text-[var(--text-muted)]" />
           </div>
+          {product.images?.[0] && (
+            <Image
+              src={product.images[0]}
+              alt={product.name}
+              fill
+              className="object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          )}
 
           {/* Hover overlay */}
           <div className="absolute inset-0 flex items-end justify-center p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-gradient-to-t from-black/60 to-transparent">
